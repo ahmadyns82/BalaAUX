@@ -1,34 +1,5 @@
 workflows:
 
-  ios-simulator-build:
-    name: BalaAUX – Simulator Build (no signing)
-    max_build_duration: 30
-    instance_type: mac_mini_m2
-
-    environment:
-      xcode: latest
-
-    triggering:
-      events:
-        - push
-        - pull_request
-      branch_patterns:
-        - pattern: main
-          include: true
-
-    scripts:
-      - name: Build for iOS Simulator
-        script: |
-          xcodebuild build \
-            -project BalaAUX.xcodeproj \
-            -scheme BalaAUX \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
-            -configuration Debug \
-            CODE_SIGNING_ALLOWED=NO \
-            SWIFT_TREAT_WARNINGS_AS_ERRORS=NO \
-            | xcpretty --color && exit ${PIPESTATUS[0]}
-
   ios-build-ipa:
     name: BalaAUX – Build Unsigned IPA
     max_build_duration: 60
@@ -38,36 +9,184 @@ workflows:
       xcode: latest
 
     scripts:
-      - name: Build iOS archive
+      - name: Reconstruct Xcode project
+        script: |
+          echo "=== Files in repo ==="
+          find . -not -path './.git/*' | sort
+
+          # Create xcodeproj folder structure
+          mkdir -p BalaAUX.xcodeproj/project.xcworkspace/xcshareddata
+          mkdir -p BalaAUX.xcodeproj/xcshareddata/xcschemes
+
+          # Write workspace file
+          cat > BalaAUX.xcodeproj/project.xcworkspace/contents.xcworkspacedata << 'WORKSPACE'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <Workspace version = "1.0">
+             <FileRef location = "self:"></FileRef>
+          </Workspace>
+          WORKSPACE
+
+          # Write scheme file
+          cat > BalaAUX.xcodeproj/xcshareddata/xcschemes/BalaAUX.xcscheme << 'SCHEME'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <Scheme LastUpgradeVersion="1500" version="1.7">
+             <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
+                <BuildActionEntries>
+                   <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+                      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="TGT" BuildableName="BalaAUX.app" BlueprintName="BalaAUX" ReferencedContainer="container:BalaAUX.xcodeproj"/>
+                   </BuildActionEntry>
+                </BuildActionEntries>
+             </BuildAction>
+             <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES"><Testables/></TestAction>
+             <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" debugServiceExtension="internal" allowLocationSimulation="YES">
+                <BuildableProductRunnable runnableDebuggingMode="0">
+                   <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="TGT" BuildableName="BalaAUX.app" BlueprintName="BalaAUX" ReferencedContainer="container:BalaAUX.xcodeproj"/>
+                </BuildableProductRunnable>
+             </LaunchAction>
+             <ArchiveAction buildConfiguration="Release" revealArchiveInOrganizer="YES"/>
+          </Scheme>
+          SCHEME
+
+          # Write pbxproj
+          cat > BalaAUX.xcodeproj/project.pbxproj << 'PBXEOF'
+          // !$*UTF8*$!
+          {
+          	archiveVersion = 1;
+          	classes = {};
+          	objectVersion = 56;
+          	objects = {
+          /* Begin PBXBuildFile section */
+          		B001 = {isa = PBXBuildFile; fileRef = F001; };
+          		B002 = {isa = PBXBuildFile; fileRef = F002; };
+          		B003 = {isa = PBXBuildFile; fileRef = F003; };
+          		B004 = {isa = PBXBuildFile; fileRef = F004; };
+          		B005 = {isa = PBXBuildFile; fileRef = F005; };
+          		B006 = {isa = PBXBuildFile; fileRef = F006; };
+          		B007 = {isa = PBXBuildFile; fileRef = F007; };
+          		B008 = {isa = PBXBuildFile; fileRef = F008; };
+          		B009 = {isa = PBXBuildFile; fileRef = F009; };
+          		B010 = {isa = PBXBuildFile; fileRef = F010; };
+          		B011 = {isa = PBXBuildFile; fileRef = F011; };
+          		B012 = {isa = PBXBuildFile; fileRef = F012; };
+          		B013 = {isa = PBXBuildFile; fileRef = F013; };
+          /* End PBXBuildFile section */
+          /* Begin PBXFileReference section */
+          		F001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalaAUXApp.swift; sourceTree = SOURCE_ROOT; };
+          		F002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = SOURCE_ROOT; };
+          		F003 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Song.swift"; sourceTree = SOURCE_ROOT; };
+          		F004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModels/PlayerViewModel.swift"; sourceTree = SOURCE_ROOT; };
+          		F005 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/AudioSessionManager.swift"; sourceTree = SOURCE_ROOT; };
+          		F006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/MusicLibrary.swift"; sourceTree = SOURCE_ROOT; };
+          		F007 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/HFPManager.swift"; sourceTree = SOURCE_ROOT; };
+          		F008 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/CallKitManager.swift"; sourceTree = SOURCE_ROOT; };
+          		F009 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/FolderBrowserView.swift"; sourceTree = SOURCE_ROOT; };
+          		F010 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/SongsListView.swift"; sourceTree = SOURCE_ROOT; };
+          		F011 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/PlayerView.swift"; sourceTree = SOURCE_ROOT; };
+          		F012 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/MiniPlayerView.swift"; sourceTree = SOURCE_ROOT; };
+          		F013 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/SettingsView.swift"; sourceTree = SOURCE_ROOT; };
+          		FINFO = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+          		FAPP = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BalaAUX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+          /* End PBXFileReference section */
+          /* Begin PBXFrameworksBuildPhase section */
+          		PH_FWK = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+          /* End PBXFrameworksBuildPhase section */
+          /* Begin PBXGroup section */
+          		GRP_ROOT = {isa = PBXGroup; children = (GRP_SRC, GRP_PROD); sourceTree = "<group>"; };
+          		GRP_PROD = {isa = PBXGroup; children = (FAPP); name = Products; sourceTree = "<group>"; };
+          		GRP_SRC = {isa = PBXGroup; children = (F001,F002,FINFO,GRP_MOD,GRP_VM,GRP_SVC,GRP_VW); name = BalaAUX; sourceTree = "<group>"; };
+          		GRP_MOD = {isa = PBXGroup; children = (F003); name = Models; sourceTree = "<group>"; };
+          		GRP_VM = {isa = PBXGroup; children = (F004); name = ViewModels; sourceTree = "<group>"; };
+          		GRP_SVC = {isa = PBXGroup; children = (F005,F006,F007,F008); name = Services; sourceTree = "<group>"; };
+          		GRP_VW = {isa = PBXGroup; children = (F009,F010,F011,F012,F013); name = Views; sourceTree = "<group>"; };
+          /* End PBXGroup section */
+          /* Begin PBXNativeTarget section */
+          		TGT = {
+          			isa = PBXNativeTarget;
+          			buildConfigurationList = CFGL_TGT;
+          			buildPhases = (PH_SRC, PH_FWK, PH_RES);
+          			buildRules = ();
+          			dependencies = ();
+          			name = BalaAUX;
+          			productName = BalaAUX;
+          			productReference = FAPP;
+          			productType = "com.apple.product-type.application";
+          		};
+          /* End PBXNativeTarget section */
+          /* Begin PBXProject section */
+          		PROJ = {
+          			isa = PBXProject;
+          			attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1500; LastUpgradeCheck = 1500; TargetAttributes = { TGT = { CreatedOnToolsVersion = 15.0; }; }; };
+          			buildConfigurationList = CFGL_PROJ;
+          			compatibilityVersion = "Xcode 14.0";
+          			developmentRegion = en;
+          			hasScannedForEncodings = 0;
+          			knownRegions = (en, Base);
+          			mainGroup = GRP_ROOT;
+          			productRefGroup = GRP_PROD;
+          			projectDirPath = "";
+          			projectRoot = "";
+          			targets = (TGT);
+          		};
+          /* End PBXProject section */
+          /* Begin PBXResourcesBuildPhase section */
+          		PH_RES = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+          /* End PBXResourcesBuildPhase section */
+          /* Begin PBXSourcesBuildPhase section */
+          		PH_SRC = {
+          			isa = PBXSourcesBuildPhase;
+          			buildActionMask = 2147483647;
+          			files = (B001,B002,B003,B004,B005,B006,B007,B008,B009,B010,B011,B012,B013);
+          			runOnlyForDeploymentPostprocessing = 0;
+          		};
+          /* End PBXSourcesBuildPhase section */
+          /* Begin XCBuildConfiguration section */
+          		CFG_PROJ_DBG = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_OPTIMIZATION_LEVEL = 0; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1","$(inherited)"); ONLY_ACTIVE_ARCH = YES; SDKROOT = iphoneos; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; SWIFT_OPTIMIZATION_LEVEL = "-Onone";}; name = Debug; };
+          		CFG_PROJ_REL = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; SDKROOT = iphoneos; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O";}; name = Release; };
+          		CFG_TGT_DBG = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 15.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks"); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.balaaux.app; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphonesimulator iphoneos"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1;}; name = Debug; };
+          		CFG_TGT_REL = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 15.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks"); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.balaaux.app; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphonesimulator iphoneos"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1;}; name = Release; };
+          /* End XCBuildConfiguration section */
+          /* Begin XCConfigurationList section */
+          		CFGL_PROJ = {isa = XCConfigurationList; buildConfigurations = (CFG_PROJ_DBG,CFG_PROJ_REL); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+          		CFGL_TGT = {isa = XCConfigurationList; buildConfigurations = (CFG_TGT_DBG,CFG_TGT_REL); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+          /* End XCConfigurationList section */
+          	};
+          	rootObject = PROJ;
+          }
+          PBXEOF
+
+          echo "=== xcodeproj created ==="
+          find BalaAUX.xcodeproj -type f
+
+      - name: Build unsigned
         script: |
           xcodebuild \
             -project BalaAUX.xcodeproj \
             -scheme BalaAUX \
-            -configuration Release \
             -sdk iphoneos \
-            -archivePath build/BalaAUX.xcarchive \
-            archive \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath $CM_BUILD_DIR/derived \
             CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             DEVELOPMENT_TEAM="" \
-            IPHONEOS_DEPLOYMENT_TARGET=15.0
+            build
 
       - name: Package IPA
         script: |
-          APP=$(find build/BalaAUX.xcarchive -name "*.app" | head -1)
+          APP=$(find $CM_BUILD_DIR/derived -name "BalaAUX.app" \
+            -path "*Release-iphoneos*" | head -1)
+          [ -z "$APP" ] && APP=$(find $CM_BUILD_DIR/derived \
+            -name "*.app" -path "*iphoneos*" | head -1)
           echo "App: $APP"
-          /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 15.0" "$APP/Info.plist"
-          vtool -set-build-version ios 15.0 15.0 \
-            -replace -output "$APP/BalaAUX.patched" "$APP/BalaAUX" 2>/dev/null && \
-            mv "$APP/BalaAUX.patched" "$APP/BalaAUX" || true
-          mkdir -p build/Payload
-          cp -r "$APP" build/Payload/BalaAUX.app
-          cd build && zip -r BalaAUX.ipa Payload/
+          mkdir -p $CM_BUILD_DIR/Payload
+          cp -r "$APP" $CM_BUILD_DIR/Payload/BalaAUX.app
+          cd $CM_BUILD_DIR
+          zip -r BalaAUX.ipa Payload/
           ls -lh BalaAUX.ipa
 
     artifacts:
-      - build/BalaAUX.ipa
+      - $CM_BUILD_DIR/BalaAUX.ipa
 
     publishing:
       email:
