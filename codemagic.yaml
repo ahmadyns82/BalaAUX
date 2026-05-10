@@ -1,0 +1,78 @@
+workflows:
+
+  ios-simulator-build:
+    name: BalaAUX – Simulator Build (no signing)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+
+    environment:
+      xcode: latest
+
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: main
+          include: true
+
+    scripts:
+      - name: Build for iOS Simulator
+        script: |
+          xcodebuild build \
+            -project BalaAUX.xcodeproj \
+            -scheme BalaAUX \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            SWIFT_TREAT_WARNINGS_AS_ERRORS=NO \
+            | xcpretty --color && exit ${PIPESTATUS[0]}
+
+  ios-build-ipa:
+    name: BalaAUX – Build Unsigned IPA
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    environment:
+      xcode: latest
+
+    scripts:
+      - name: Build iOS archive
+        script: |
+          xcodebuild \
+            -project BalaAUX.xcodeproj \
+            -scheme BalaAUX \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/BalaAUX.xcarchive \
+            archive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            DEVELOPMENT_TEAM="" \
+            IPHONEOS_DEPLOYMENT_TARGET=15.0
+
+      - name: Package IPA
+        script: |
+          APP=$(find build/BalaAUX.xcarchive -name "*.app" | head -1)
+          echo "App: $APP"
+          /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 15.0" "$APP/Info.plist"
+          vtool -set-build-version ios 15.0 15.0 \
+            -replace -output "$APP/BalaAUX.patched" "$APP/BalaAUX" 2>/dev/null && \
+            mv "$APP/BalaAUX.patched" "$APP/BalaAUX" || true
+          mkdir -p build/Payload
+          cp -r "$APP" build/Payload/BalaAUX.app
+          cd build && zip -r BalaAUX.ipa Payload/
+          ls -lh BalaAUX.ipa
+
+    artifacts:
+      - build/BalaAUX.ipa
+
+    publishing:
+      email:
+        recipients:
+          - ahmad.yns@hotmail.com
+        notify:
+          success: true
+          failure: true
