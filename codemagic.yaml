@@ -9,1061 +9,1242 @@ workflows:
       xcode: latest
 
     scripts:
-      - name: Reconstruct project structure
+      - name: Create project.pbxproj
         script: |
-          echo "=== Repo contents ==="
-          ls -la
-
-          # Create source directories
-          mkdir -p Models ViewModels Services Views
           mkdir -p BalaAUX.xcodeproj/project.xcworkspace/xcshareddata
           mkdir -p BalaAUX.xcodeproj/xcshareddata/xcschemes
-
-          # Create Models/Song.swift
-          cat > Models/Song.swift << 'SWIFT_MODELS_SONG_SWIFT'
-          import Foundation
-          import UIKit
-          import MediaPlayer
+          cat > BalaAUX.xcodeproj/project.pbxproj << 'PBXEOF'
+          // !$*UTF8*$!
+          {
+          	archiveVersion = 1;
+          	classes = {};
+          	objectVersion = 56;
+          	objects = {
           
-          struct Song: Identifiable, Hashable {
-              let id: UUID
-              let title: String
-              let artist: String
-              let album: String
-              let duration: TimeInterval
-              let url: URL
-              let folderName: String
-              var artwork: UIImage?
-              let mediaItem: MPMediaItem?
+          /* Begin PBXBuildFile section */
+          		B001 /* BalaAUXApp.swift */          = {isa = PBXBuildFile; fileRef = F001; };
+          		B002 /* ContentView.swift */         = {isa = PBXBuildFile; fileRef = F002; };
+          		B003 /* Song.swift */                = {isa = PBXBuildFile; fileRef = F003; };
+          		B004 /* PlayerViewModel.swift */     = {isa = PBXBuildFile; fileRef = F004; };
+          		B005 /* AudioSessionManager.swift */ = {isa = PBXBuildFile; fileRef = F005; };
+          		B006 /* MusicLibrary.swift */        = {isa = PBXBuildFile; fileRef = F006; };
+          		B007 /* HFPManager.swift */          = {isa = PBXBuildFile; fileRef = F007; };
+          		B008 /* CallKitManager.swift */      = {isa = PBXBuildFile; fileRef = F008; };
+          		B009 /* FolderBrowserView.swift */   = {isa = PBXBuildFile; fileRef = F009; };
+          		B010 /* SongsListView.swift */       = {isa = PBXBuildFile; fileRef = F010; };
+          		B011 /* PlayerView.swift */          = {isa = PBXBuildFile; fileRef = F011; };
+          		B012 /* MiniPlayerView.swift */      = {isa = PBXBuildFile; fileRef = F012; };
+          		B013 /* SettingsView.swift */        = {isa = PBXBuildFile; fileRef = F013; };
+          /* End PBXBuildFile section */
           
-              init(title: String, artist: String, album: String,
-                   duration: TimeInterval, url: URL, folderName: String,
-                   artwork: UIImage? = nil, mediaItem: MPMediaItem? = nil) {
-                  self.id = UUID(); self.title = title; self.artist = artist
-                  self.album = album; self.duration = duration; self.url = url
-                  self.folderName = folderName; self.artwork = artwork
-                  self.mediaItem = mediaItem
-              }
+          /* Begin PBXFileReference section */
+          		F001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalaAUXApp.swift;                    sourceTree = SOURCE_ROOT; };
+          		F002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift;                   sourceTree = SOURCE_ROOT; };
+          		F003 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Song.swift";                 sourceTree = SOURCE_ROOT; };
+          		F004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModels/PlayerViewModel.swift";  sourceTree = SOURCE_ROOT; };
+          		F005 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/AudioSessionManager.swift"; sourceTree = SOURCE_ROOT; };
+          		F006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/MusicLibrary.swift";       sourceTree = SOURCE_ROOT; };
+          		F007 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/HFPManager.swift";         sourceTree = SOURCE_ROOT; };
+          		F008 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/CallKitManager.swift";     sourceTree = SOURCE_ROOT; };
+          		F009 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/FolderBrowserView.swift";     sourceTree = SOURCE_ROOT; };
+          		F010 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/SongsListView.swift";         sourceTree = SOURCE_ROOT; };
+          		F011 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/PlayerView.swift";            sourceTree = SOURCE_ROOT; };
+          		F012 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/MiniPlayerView.swift";        sourceTree = SOURCE_ROOT; };
+          		F013 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/SettingsView.swift";          sourceTree = SOURCE_ROOT; };
+          		FINFO = {isa = PBXFileReference; lastKnownFileType = text.plist.xml;  path = Info.plist;                          sourceTree = SOURCE_ROOT; };
+          		FAPP  = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BalaAUX.app;  sourceTree = BUILT_PRODUCTS_DIR; };
+          /* End PBXFileReference section */
           
-              var durationFormatted: String {
-                  let m = Int(duration) / 60; let s = Int(duration) % 60
-                  return String(format: "%d:%02d", m, s)
-              }
-              func hash(into hasher: inout Hasher) { hasher.combine(id) }
-              static func == (lhs: Song, rhs: Song) -> Bool { lhs.id == rhs.id }
+          /* Begin PBXFrameworksBuildPhase section */
+          		PH_FWK = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+          /* End PBXFrameworksBuildPhase section */
+          
+          /* Begin PBXGroup section */
+          		GRP_ROOT = {isa = PBXGroup; children = (GRP_SRC, GRP_PROD); sourceTree = "<group>"; };
+          		GRP_PROD = {isa = PBXGroup; children = (FAPP); name = Products; sourceTree = "<group>"; };
+          		GRP_SRC  = {isa = PBXGroup; children = (F001, F002, FINFO, GRP_MOD, GRP_VM, GRP_SVC, GRP_VW); name = BalaAUX; sourceTree = "<group>"; };
+          		GRP_MOD  = {isa = PBXGroup; children = (F003); name = Models;     sourceTree = "<group>"; };
+          		GRP_VM   = {isa = PBXGroup; children = (F004); name = ViewModels; sourceTree = "<group>"; };
+          		GRP_SVC  = {isa = PBXGroup; children = (F005, F006, F007, F008); name = Services; sourceTree = "<group>"; };
+          		GRP_VW   = {isa = PBXGroup; children = (F009, F010, F011, F012, F013); name = Views; sourceTree = "<group>"; };
+          /* End PBXGroup section */
+          
+          /* Begin PBXNativeTarget section */
+          		TGT = {
+          			isa = PBXNativeTarget;
+          			buildConfigurationList = CFGL_TGT;
+          			buildPhases = (PH_SRC, PH_FWK, PH_RES);
+          			buildRules = ();
+          			dependencies = ();
+          			name = BalaAUX;
+          			productName = BalaAUX;
+          			productReference = FAPP;
+          			productType = "com.apple.product-type.application";
+          		};
+          /* End PBXNativeTarget section */
+          
+          /* Begin PBXProject section */
+          		PROJ = {
+          			isa = PBXProject;
+          			attributes = {
+          				BuildIndependentTargetsInParallel = 1;
+          				LastSwiftUpdateCheck = 1500;
+          				LastUpgradeCheck = 1500;
+          				TargetAttributes = { TGT = { CreatedOnToolsVersion = 15.0; }; };
+          			};
+          			buildConfigurationList = CFGL_PROJ;
+          			compatibilityVersion = "Xcode 14.0";
+          			developmentRegion = en;
+          			hasScannedForEncodings = 0;
+          			knownRegions = (en, Base);
+          			mainGroup = GRP_ROOT;
+          			productRefGroup = GRP_PROD;
+          			projectDirPath = "";
+          			projectRoot = "";
+          			targets = (TGT);
+          		};
+          /* End PBXProject section */
+          
+          /* Begin PBXResourcesBuildPhase section */
+          		PH_RES = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+          /* End PBXResourcesBuildPhase section */
+          
+          /* Begin PBXSourcesBuildPhase section */
+          		PH_SRC = {
+          			isa = PBXSourcesBuildPhase;
+          			buildActionMask = 2147483647;
+          			files = (B001,B002,B003,B004,B005,B006,B007,B008,B009,B010,B011,B012,B013);
+          			runOnlyForDeploymentPostprocessing = 0;
+          		};
+          /* End PBXSourcesBuildPhase section */
+          
+          /* Begin XCBuildConfiguration section */
+          		CFG_PROJ_DBG = {
+          			isa = XCBuildConfiguration;
+          			buildSettings = {
+          				ALWAYS_SEARCH_USER_PATHS = NO;
+          				DEBUG_INFORMATION_FORMAT = dwarf;
+          				ENABLE_TESTABILITY = YES;
+          				GCC_OPTIMIZATION_LEVEL = 0;
+          				GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1","$(inherited)");
+          				ONLY_ACTIVE_ARCH = YES;
+          				SDKROOT = iphoneos;
+          				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+          				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+          			};
+          			name = Debug;
+          		};
+          		CFG_PROJ_REL = {
+          			isa = XCBuildConfiguration;
+          			buildSettings = {
+          				ALWAYS_SEARCH_USER_PATHS = NO;
+          				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+          				ENABLE_NS_ASSERTIONS = NO;
+          				SDKROOT = iphoneos;
+          				SWIFT_COMPILATION_MODE = wholemodule;
+          				SWIFT_OPTIMIZATION_LEVEL = "-O";
+          			};
+          			name = Release;
+          		};
+          		CFG_TGT_DBG = {
+          			isa = XCBuildConfiguration;
+          			buildSettings = {
+          				CODE_SIGN_STYLE = Automatic;
+          				CURRENT_PROJECT_VERSION = 1;
+          				DEVELOPMENT_TEAM = "";
+          				GENERATE_INFOPLIST_FILE = NO;
+          				INFOPLIST_FILE = Info.plist;
+          				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+          				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks");
+          				MARKETING_VERSION = 1.0;
+          				PRODUCT_BUNDLE_IDENTIFIER = com.balaaux.app;
+          				PRODUCT_NAME = "$(TARGET_NAME)";
+          				SDKROOT = iphoneos;
+          				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+          				SUPPORTS_MACCATALYST = NO;
+          				SWIFT_EMIT_LOC_STRINGS = YES;
+          				SWIFT_VERSION = 5.0;
+          				TARGETED_DEVICE_FAMILY = 1;
+          			};
+          			name = Debug;
+          		};
+          		CFG_TGT_REL = {
+          			isa = XCBuildConfiguration;
+          			buildSettings = {
+          				CODE_SIGN_STYLE = Automatic;
+          				CURRENT_PROJECT_VERSION = 1;
+          				DEVELOPMENT_TEAM = "";
+          				GENERATE_INFOPLIST_FILE = NO;
+          				INFOPLIST_FILE = Info.plist;
+          				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+          				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks");
+          				MARKETING_VERSION = 1.0;
+          				PRODUCT_BUNDLE_IDENTIFIER = com.balaaux.app;
+          				PRODUCT_NAME = "$(TARGET_NAME)";
+          				SDKROOT = iphoneos;
+          				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+          				SUPPORTS_MACCATALYST = NO;
+          				SWIFT_EMIT_LOC_STRINGS = YES;
+          				SWIFT_VERSION = 5.0;
+          				TARGETED_DEVICE_FAMILY = 1;
+          			};
+          			name = Release;
+          		};
+          /* End XCBuildConfiguration section */
+          
+          /* Begin XCConfigurationList section */
+          		CFGL_PROJ = {isa = XCConfigurationList; buildConfigurations = (CFG_PROJ_DBG, CFG_PROJ_REL); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+          		CFGL_TGT  = {isa = XCConfigurationList; buildConfigurations = (CFG_TGT_DBG,  CFG_TGT_REL);  defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+          /* End XCConfigurationList section */
+          
+          	};
+          	rootObject = PROJ;
           }
           
-          struct MusicFolder: Identifiable {
-              let id = UUID()
-              let name: String
-              var songs: [Song]
-              var songCount: Int { songs.count }
-          }
-          
-          SWIFT_MODELS_SONG_SWIFT
-
-          # Create ViewModels/PlayerViewModel.swift
-          cat > ViewModels/PlayerViewModel.swift << 'SWIFT_VIEWMODELS_PLAYERVIEWMODEL_SWIFT'
-          import AVFoundation
-          import MediaPlayer
-          import UIKit
-          
-          @MainActor
-          final class PlayerViewModel: ObservableObject {
-          
-              @Published var currentSong: Song?
-              @Published var playlist:    [Song] = []
-              @Published var currentIndex = -1
-              @Published var isPlaying    = false
-              @Published var currentTime: TimeInterval = 0
-              @Published var duration:    TimeInterval = 0
-              @Published var shuffle      = false
-              @Published var repeatMode:  RepeatMode   = .none
-              @Published var volume: Float = 1.0 { didSet { player?.volume = volume } }
-          
-              enum RepeatMode { case none, one, all }
-          
-              private var player: AVAudioPlayer?
-              private var progressTimer: Timer?
-              private let audioSession = AudioSessionManager.shared
-          
-              func setQueue(_ songs: [Song], startAt index: Int) {
-                  playlist = songs; currentIndex = index; playCurrent()
-              }
-          
-              func playSong(_ song: Song) {
-                  if let idx = playlist.firstIndex(of: song) { currentIndex = idx }
-                  else { playlist = [song]; currentIndex = 0 }
-                  playCurrent()
-              }
-          
-              private func playCurrent() {
-                  guard currentIndex >= 0, currentIndex < playlist.count else { return }
-                  play(song: playlist[currentIndex])
-              }
-          
-              private func play(song: Song) {
-                  stopTimer()
-                  currentSong = song
-                  do {
-                      try AVAudioSession.sharedInstance().setActive(true)
-                      let p = try AVAudioPlayer(contentsOf: song.url)
-                      p.delegate      = PlayerDelegate.shared
-                      p.enableRate    = true
-                      p.prepareToPlay()
-                      p.numberOfLoops = repeatMode == .one ? -1 : 0
-                      p.volume = audioSession.isHFPActive ? min(volume * 2.0, 1.0) : volume
-                      player   = p
-                      duration = p.duration
-                      p.play()
-                      isPlaying = true
-                      startTimer()
-                      updateNowPlaying()
-                      PlayerDelegate.shared.onFinish = { [weak self] in
-                          Task { @MainActor in self?.handleFinished() }
-                      }
-                  } catch { print("Playback error: \(error)") }
-              }
-          
-              func togglePlayPause() { if isPlaying { pause() } else { resume() } }
-              func pause()  { player?.pause(); isPlaying = false; stopTimer(); updateNowPlaying() }
-              func resume() { player?.play();  isPlaying = true;  startTimer(); updateNowPlaying() }
-          
-              func next() {
-                  guard !playlist.isEmpty else { return }
-                  currentIndex = shuffle
-                      ? Int.random(in: 0..<playlist.count)
-                      : (currentIndex + 1) % playlist.count
-                  playCurrent()
-              }
-          
-              func previous() {
-                  guard !playlist.isEmpty else { return }
-                  if currentTime > 3 { seek(to: 0); return }
-                  currentIndex = (currentIndex - 1 + playlist.count) % playlist.count
-                  playCurrent()
-              }
-          
-              func seek(to time: TimeInterval) {
-                  player?.currentTime = time; currentTime = time; updateNowPlaying()
-              }
-          
-              private func handleFinished() {
-                  switch repeatMode {
-                  case .one:  playCurrent()
-                  case .all:  next()
-                  case .none:
-                      if currentIndex < playlist.count - 1 { next() }
-                      else { isPlaying = false; stopTimer() }
-                  }
-              }
-          
-              private func startTimer() {
-                  stopTimer()
-                  progressTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
-                      guard let self = self else { return }
-                      Task { @MainActor [weak self] in
-                          guard let self = self, let p = self.player else { return }
-                          self.currentTime = p.currentTime
-                          self.updateNowPlaying()
-                      }
-                  }
-              }
-          
-              private func stopTimer() { progressTimer?.invalidate(); progressTimer = nil }
-          
-              private func updateNowPlaying() {
-                  guard let song = currentSong else { return }
-                  var info: [String: Any] = [
-                      MPMediaItemPropertyTitle:                    song.title,
-                      MPMediaItemPropertyArtist:                   song.artist,
-                      MPMediaItemPropertyAlbumTitle:               song.album,
-                      MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime,
-                      MPMediaItemPropertyPlaybackDuration:         duration,
-                      MPNowPlayingInfoPropertyPlaybackRate:        isPlaying ? 1.0 : 0.0,
-                  ]
-                  if let art = song.artwork {
-                      info[MPMediaItemPropertyArtwork] =
-                          MPMediaItemArtwork(boundsSize: art.size) { _ in art }
-                  }
-                  MPNowPlayingInfoCenter.default().nowPlayingInfo = info
-              }
-          
-              func setupRemoteControls() {
-                  let rc = MPRemoteCommandCenter.shared()
-                  rc.playCommand.addTarget            { [weak self] _ in self?.resume();   return .success }
-                  rc.pauseCommand.addTarget           { [weak self] _ in self?.pause();    return .success }
-                  rc.nextTrackCommand.addTarget       { [weak self] _ in self?.next();     return .success }
-                  rc.previousTrackCommand.addTarget   { [weak self] _ in self?.previous(); return .success }
-                  rc.changePlaybackPositionCommand.addTarget { [weak self] event in
-                      guard let e = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
-                      self?.seek(to: e.positionTime); return .success
-                  }
-              }
-          }
-          
-          final class PlayerDelegate: NSObject, AVAudioPlayerDelegate {
-              static let shared = PlayerDelegate()
-              var onFinish: (() -> Void)?
-              func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-                  if flag { onFinish?() }
-              }
-          }
-          
-          SWIFT_VIEWMODELS_PLAYERVIEWMODEL_SWIFT
-
-          # Create Services/AudioSessionManager.swift
-          cat > Services/AudioSessionManager.swift << 'SWIFT_SERVICES_AUDIOSESSIONMANAGER_SWIFT'
-          import AVFoundation
-          import Foundation
-          
-          final class AudioSessionManager: ObservableObject {
-              static let shared = AudioSessionManager()
-              @Published var isHFPActive = false
-              @Published var currentRoute = ""
-              private let session = AVAudioSession.sharedInstance()
-              private var routeObserver: Any?
-          
-              private init() {
-                  observeRouteChanges()
-              }
-          
-              func configureForMusic() {
-                  do {
-                      try session.setActive(false, options: .notifyOthersOnDeactivation)
-                      try session.setCategory(.playback, mode: .default,
-                          options: [.allowBluetoothA2DP, .allowAirPlay])
-                      try session.setPreferredSampleRate(44100)
-                      try session.setPreferredIOBufferDuration(0.005)
-                      try session.setActive(true)
-                      isHFPActive = false
-                      updateRouteDescription()
-                  } catch { print("Music session error: \(error)") }
-              }
-          
-              func configureForHFP() {
-                  do {
-                      try session.setActive(false, options: .notifyOthersOnDeactivation)
-                      try session.setCategory(.playAndRecord, mode: .voiceChat,
-                          options: [.allowBluetoothHFP, .allowBluetooth, .defaultToSpeaker])
-                      try session.setPreferredSampleRate(16000)
-                      try session.setPreferredIOBufferDuration(0.02)
-                      try session.setActive(true)
-                      isHFPActive = true
-                      updateRouteDescription()
-                  } catch { print("HFP session error: \(error)") }
-              }
-          
-              func deactivate() {
-                  try? session.setActive(false, options: .notifyOthersOnDeactivation)
-              }
-          
-              private func observeRouteChanges() {
-                  routeObserver = NotificationCenter.default.addObserver(
-                      forName: AVAudioSession.routeChangeNotification,
-                      object: nil, queue: .main) { [weak self] _ in
-                          self?.updateRouteDescription()
-                  }
-              }
-          
-              private func updateRouteDescription() {
-                  currentRoute = session.currentRoute.outputs
-                      .map { $0.portName }.joined(separator: ", ")
-              }
-          
-              var isBluetoothConnected: Bool {
-                  session.currentRoute.outputs.contains {
-                      [.bluetoothA2DP, .bluetoothHFP, .bluetoothLE].contains($0.portType)
-                  }
-              }
-          
-              var bluetoothPortName: String? {
-                  session.currentRoute.outputs.first {
-                      [.bluetoothA2DP, .bluetoothHFP, .bluetoothLE].contains($0.portType)
-                  }?.portName
-              }
-          
-              deinit {
-                  if let obs = routeObserver { NotificationCenter.default.removeObserver(obs) }
-              }
-          }
-          
-          SWIFT_SERVICES_AUDIOSESSIONMANAGER_SWIFT
-
-          # Create Services/MusicLibrary.swift
-          cat > Services/MusicLibrary.swift << 'SWIFT_SERVICES_MUSICLIBRARY_SWIFT'
-          import Foundation
-          import MediaPlayer
-          import UIKit
-          import AVFoundation
-          
-          final class MusicLibrary: ObservableObject {
-              static let shared = MusicLibrary()
-              @Published var folders:    [MusicFolder] = []
-              @Published var allSongs:   [Song]        = []
-              @Published var isLoading                 = false
-          
-              private init() {}
-          
-              func load() {
-                  isLoading = true
-                  Task.detached(priority: .userInitiated) { [weak self] in
-                      guard let self else { return }
-                      let songs   = await self.scanAll()
-                      let grouped = self.groupByFolder(songs)
-                      await MainActor.run {
-                          self.allSongs = songs
-                          self.folders  = grouped
-                          self.isLoading = false
-                      }
-                  }
-              }
-          
-              private func scanAll() async -> [Song] {
-                  var songs: [Song] = []
-                  let status = MPMediaLibrary.authorizationStatus()
-                  if status == .authorized || status == .notDetermined {
-                      let granted = await requestAccess()
-                      if granted { songs += scanMediaLibrary() }
-                  }
-                  songs += scanDirectory(
-                      url: FileManager.default.urls(for: .documentDirectory,
-                                                    in: .userDomainMask)[0],
-                      folderName: "Documents")
-                  songs += scanDirectory(
-                      url: FileManager.default.urls(for: .downloadsDirectory,
-                                                    in: .userDomainMask).first,
-                      folderName: "Downloads")
-                  var seen = Set<URL>()
-                  return songs.filter { seen.insert($0.url).inserted }
-              }
-          
-              private func requestAccess() async -> Bool {
-                  await withCheckedContinuation { cont in
-                      MPMediaLibrary.requestAuthorization { status in
-                          cont.resume(returning: status == .authorized)
-                      }
-                  }
-              }
-          
-              private func scanMediaLibrary() -> [Song] {
-                  guard let collections = MPMediaQuery.songs().collections else { return [] }
-                  var songs: [Song] = []
-                  for col in collections {
-                      for item in col.items {
-                          guard let url = item.assetURL else { continue }
-                          let art = item.artwork?.image(at: CGSize(width: 300, height: 300))
-                          songs.append(Song(
-                              title:      item.title ?? "Unknown",
-                              artist:     item.artist ?? "Unknown Artist",
-                              album:      item.albumTitle ?? "",
-                              duration:   item.playbackDuration,
-                              url:        url,
-                              folderName: item.albumTitle ?? item.artist ?? "Music Library",
-                              artwork:    art,
-                              mediaItem:  item
-                          ))
-                      }
-                  }
-                  return songs
-              }
-          
-              private func scanDirectory(url: URL?, folderName: String) -> [Song] {
-                  guard let url = url,
-                        let items = try? FileManager.default.contentsOfDirectory(
-                          at: url, includingPropertiesForKeys: [.isDirectoryKey],
-                          options: .skipsHiddenFiles) else { return [] }
-                  var songs: [Song] = []
-                  for item in items {
-                      let isDir = (try? item.resourceValues(
-                          forKeys: [.isDirectoryKey]))?.isDirectory ?? false
-                      if isDir {
-                          songs += scanDirectory(url: item, folderName: item.lastPathComponent)
-                      } else if isAudio(item) {
-                          let title    = item.deletingPathExtension().lastPathComponent
-                          let duration = CMTimeGetSeconds(AVURLAsset(url: item).duration)
-                          songs.append(Song(title: title, artist: "Unknown Artist",
-                                            album: "", duration: duration,
-                                            url: item, folderName: folderName))
-                      }
-                  }
-                  return songs
-              }
-          
-              private func isAudio(_ url: URL) -> Bool {
-                  ["mp3","m4a","aac","wav","aiff","flac","ogg","caf"]
-                      .contains(url.pathExtension.lowercased())
-              }
-          
-              private func groupByFolder(_ songs: [Song]) -> [MusicFolder] {
-                  var map: [String: [Song]] = [:]
-                  for song in songs { map[song.folderName, default: []].append(song) }
-                  return map.map { MusicFolder(name: $0.key, songs: $0.value) }
-                      .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-              }
-          }
-          
-          SWIFT_SERVICES_MUSICLIBRARY_SWIFT
-
-          # Create Services/HFPManager.swift
-          cat > Services/HFPManager.swift << 'SWIFT_SERVICES_HFPMANAGER_SWIFT'
-          import Foundation
-          import AVFoundation
-          
-          final class HFPManager: ObservableObject {
-              static let shared = HFPManager()
-              @Published var isEnabled  = false
-              @Published var routeInfo  = "Standard audio"
-              private let audioSession  = AudioSessionManager.shared
-          
-              private init() {
-                  NotificationCenter.default.addObserver(
-                      forName: AVAudioSession.routeChangeNotification,
-                      object: nil, queue: .main) { [weak self] _ in
-                          self?.routeInfo = self?.audioSession.currentRoute ?? "Unknown"
-                  }
-              }
-          
-              func enable(playerVM: PlayerViewModel) {
-                  isEnabled = true
-                  Task { @MainActor in
-                      let wasPlaying = playerVM.isPlaying
-                      if wasPlaying { playerVM.pause() }
-                      self.audioSession.configureForHFP()
-                      if wasPlaying {
-                          try? await Task.sleep(nanoseconds: 300_000_000)
-                          playerVM.resume()
-                      }
-                  }
-              }
-          
-              func disable(playerVM: PlayerViewModel) {
-                  isEnabled = false
-                  Task { @MainActor in
-                      let wasPlaying = playerVM.isPlaying
-                      if wasPlaying { playerVM.pause() }
-                      self.audioSession.configureForMusic()
-                      if wasPlaying {
-                          try? await Task.sleep(nanoseconds: 300_000_000)
-                          playerVM.resume()
-                      }
-                  }
-              }
-          }
-          
-          SWIFT_SERVICES_HFPMANAGER_SWIFT
-
-          # Create Services/CallKitManager.swift
-          cat > Services/CallKitManager.swift << 'SWIFT_SERVICES_CALLKITMANAGER_SWIFT'
-          import CallKit
-          import AVFoundation
-          
-          final class CallKitManager: NSObject, ObservableObject {
-              static let shared = CallKitManager()
-          
-              @Published var isCallActive = false
-          
-              private let provider: CXProvider
-              private let callController = CXCallController()
-              private var currentCallUUID: UUID?
-          
-              override private init() {
-                  let config = CXProviderConfiguration()
-                  config.localizedName            = "Bala AUX"
-                  config.supportsVideo            = false
-                  config.maximumCallsPerCallGroup = 1
-                  config.supportedHandleTypes     = [.generic]
-                  provider = CXProvider(configuration: config)
-                  super.init()
-                  provider.setDelegate(self, queue: .main)
-              }
-          
-              func startCall() {
-                  guard !isCallActive else { return }
-                  let uuid    = UUID()
-                  currentCallUUID = uuid
-                  let handle  = CXHandle(type: .generic, value: "Bala AUX")
-                  let action  = CXStartCallAction(call: uuid, handle: handle)
-                  action.isVideo = false
-                  callController.request(CXTransaction(action: action)) { error in
-                      if let error = error { print("CallKit start error: \(error)") }
-                  }
-              }
-          
-              func endCall() {
-                  guard let uuid = currentCallUUID else { return }
-                  callController.request(
-                      CXTransaction(action: CXEndCallAction(call: uuid))) { error in
-                      if let error = error { print("CallKit end error: \(error)") }
-                  }
-                  currentCallUUID = nil
-                  isCallActive    = false
-              }
-          }
-          
-          extension CallKitManager: CXProviderDelegate {
-              func providerDidReset(_ provider: CXProvider) {
-                  isCallActive = false; currentCallUUID = nil
-              }
-          
-              func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
-                  AudioSessionManager.shared.configureForHFP()
-                  action.fulfill()
-                  isCallActive = true
-                  provider.reportOutgoingCall(with: action.callUUID, connectedAt: Date())
-              }
-          
-              func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-                  action.fulfill()
-                  isCallActive = false
-                  AudioSessionManager.shared.configureForMusic()
-              }
-          
-              func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
-                  print("CallKit HFP audio activated")
-                  NotificationCenter.default.post(name: .callKitAudioActivated, object: nil)
-              }
-          
-              func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
-                  print("CallKit audio deactivated")
-                  NotificationCenter.default.post(name: .callKitAudioDeactivated, object: nil)
-              }
-          }
-          
-          extension Notification.Name {
-              static let callKitAudioActivated   = Notification.Name("callKitAudioActivated")
-              static let callKitAudioDeactivated = Notification.Name("callKitAudioDeactivated")
-          }
-          
-          SWIFT_SERVICES_CALLKITMANAGER_SWIFT
-
-          # Create Views/FolderBrowserView.swift
-          cat > Views/FolderBrowserView.swift << 'SWIFT_VIEWS_FOLDERBROWSERVIEW_SWIFT'
-          import SwiftUI
-          
-          struct FolderBrowserView: View {
-              @EnvironmentObject var library: MusicLibrary
-              @State private var searchText = ""
-          
-              var filtered: [MusicFolder] {
-                  searchText.isEmpty ? library.folders
-                      : library.folders.filter {
-                          $0.name.localizedCaseInsensitiveContains(searchText) }
-              }
-          
-              var body: some View {
-                  NavigationView {
-                      Group {
-                          if library.isLoading {
-                              VStack(spacing: 16) {
-                                  ProgressView().scaleEffect(1.4)
-                                  Text("Scanning music…").foregroundColor(.secondary)
-                              }
-                              .frame(maxWidth: .infinity, maxHeight: .infinity)
-                          } else if library.folders.isEmpty {
-                              VStack(spacing: 16) {
-                                  Image(systemName: "folder.badge.questionmark")
-                                      .font(.system(size: 56)).foregroundColor(.secondary)
-                                  Text("No Music Found").font(.title2.bold())
-                                  Text("Add MP3/M4A files via Files app → Bala AUX → Documents")
-                                      .multilineTextAlignment(.center)
-                                      .foregroundColor(.secondary).padding(.horizontal, 32)
-                              }
-                              .frame(maxWidth: .infinity, maxHeight: .infinity)
-                          } else {
-                              List(filtered) { folder in
-                                  NavigationLink(destination:
-                                      SongsListView(songs: folder.songs, title: folder.name)) {
-                                      HStack(spacing: 14) {
-                                          ZStack {
-                                              RoundedRectangle(cornerRadius: 10)
-                                                  .fill(Color.blue.opacity(0.15))
-                                                  .frame(width: 46, height: 46)
-                                              Image(systemName: "folder.fill")
-                                                  .font(.system(size: 22))
-                                                  .foregroundColor(.blue)
-                                          }
-                                          VStack(alignment: .leading, spacing: 3) {
-                                              Text(folder.name)
-                                                  .font(.system(size: 16, weight: .semibold))
-                                              Text("\(folder.songCount) song\(folder.songCount == 1 ? "" : "s")")
-                                                  .font(.system(size: 13))
-                                                  .foregroundColor(.secondary)
-                                          }
-                                          Spacer()
-                                      }
-                                      .padding(.vertical, 4)
-                                  }
-                                  .listRowBackground(Color(.secondarySystemBackground))
-                              }
-                              .listStyle(.insetGrouped)
-                              .searchable(text: $searchText, prompt: "Search folders")
-                              .refreshable { library.load() }
-                          }
-                      }
-                      .navigationTitle("Bala AUX")
-                      .navigationBarTitleDisplayMode(.large)
-                      .toolbar {
-                          ToolbarItem(placement: .navigationBarTrailing) {
-                              Button { library.load() } label: {
-                                  Image(systemName: "arrow.clockwise")
-                              }
-                          }
-                      }
-                  }
-                  .navigationViewStyle(.stack)
-              }
-          }
-          
-          SWIFT_VIEWS_FOLDERBROWSERVIEW_SWIFT
-
-          # Create Views/SongsListView.swift
-          cat > Views/SongsListView.swift << 'SWIFT_VIEWS_SONGSLISTVIEW_SWIFT'
-          import SwiftUI
-          
-          struct SongsListView: View {
-              @EnvironmentObject var player: PlayerViewModel
-              let songs: [Song]
-              let title: String
-              @State private var searchText = ""
-          
-              var filtered: [Song] {
-                  searchText.isEmpty ? songs
-                      : songs.filter {
-                          $0.title.localizedCaseInsensitiveContains(searchText) ||
-                          $0.artist.localizedCaseInsensitiveContains(searchText) }
-              }
-          
-              var body: some View {
-                  Group {
-                      if songs.isEmpty {
-                          VStack(spacing: 16) {
-                              Image(systemName: "music.note").font(.system(size: 48))
-                                  .foregroundColor(.secondary)
-                              Text("No Songs").font(.title2.bold())
-                          }
-                          .frame(maxWidth: .infinity, maxHeight: .infinity)
-                      } else {
-                          List {
-                              ForEach(Array(filtered.enumerated()), id: \.element.id) { idx, song in
-                                  HStack(spacing: 12) {
-                                      ZStack {
-                                          if player.isPlaying && player.currentSong?.id == song.id {
-                                              Image(systemName: "waveform")
-                                                  .font(.system(size: 14)).foregroundColor(.blue)
-                                          } else if player.currentSong?.id == song.id {
-                                              Image(systemName: "play.fill")
-                                                  .font(.system(size: 12)).foregroundColor(.blue)
-                                          } else {
-                                              Text("\(idx + 1)")
-                                                  .font(.system(size: 13, weight: .medium, design: .monospaced))
-                                                  .foregroundColor(.secondary)
-                                          }
-                                      }
-                                      .frame(width: 24)
-          
-                                      Group {
-                                          if let art = song.artwork {
-                                              Image(uiImage: art).resizable().scaledToFill()
-                                          } else {
-                                              Image(systemName: "music.note")
-                                                  .font(.system(size: 18)).foregroundColor(.secondary)
-                                          }
-                                      }
-                                      .frame(width: 44, height: 44)
-                                      .background(Color(.tertiarySystemBackground))
-                                      .clipShape(RoundedRectangle(cornerRadius: 6))
-          
-                                      VStack(alignment: .leading, spacing: 3) {
-                                          Text(song.title)
-                                              .font(.system(size: 15,
-                                                  weight: player.currentSong?.id == song.id ? .semibold : .regular))
-                                              .foregroundColor(player.currentSong?.id == song.id ? .blue : .primary)
-                                              .lineLimit(1)
-                                          Text(song.artist)
-                                              .font(.system(size: 13)).foregroundColor(.secondary).lineLimit(1)
-                                      }
-                                      Spacer()
-                                      Text(song.durationFormatted)
-                                          .font(.system(size: 13, design: .monospaced))
-                                          .foregroundColor(.secondary)
-                                  }
-                                  .padding(.vertical, 3)
-                                  .contentShape(Rectangle())
-                                  .onTapGesture { player.setQueue(filtered, startAt: idx) }
-                                  .listRowBackground(
-                                      player.currentSong?.id == song.id
-                                          ? Color.blue.opacity(0.1)
-                                          : Color(.secondarySystemBackground))
-                              }
-                          }
-                          .listStyle(.insetGrouped)
-                          .searchable(text: $searchText, prompt: "Search songs")
-                          .toolbar {
-                              ToolbarItem(placement: .navigationBarTrailing) {
-                                  Button {
-                                      player.shuffle = true
-                                      player.setQueue(songs.shuffled(), startAt: 0)
-                                  } label: { Image(systemName: "shuffle") }
-                              }
-                          }
-                      }
-                  }
-                  .navigationTitle(title)
-                  .navigationBarTitleDisplayMode(.inline)
-              }
-          }
-          
-          SWIFT_VIEWS_SONGSLISTVIEW_SWIFT
-
-          # Create Views/PlayerView.swift
-          cat > Views/PlayerView.swift << 'SWIFT_VIEWS_PLAYERVIEW_SWIFT'
-          import SwiftUI
-          
-          struct PlayerView: View {
-              @EnvironmentObject var player: PlayerViewModel
-          
-              var body: some View {
-                  NavigationView {
-                      VStack(spacing: 0) {
-                          Spacer(minLength: 16)
-          
-                          // Artwork
-                          ZStack {
-                              if let art = player.currentSong?.artwork {
-                                  Image(uiImage: art).resizable().scaledToFill()
-                                      .clipShape(RoundedRectangle(cornerRadius: 20))
-                                      .shadow(color: .black.opacity(0.4), radius: 30, x: 0, y: 15)
-                              } else {
-                                  RoundedRectangle(cornerRadius: 20)
-                                      .fill(LinearGradient(
-                                          colors: [Color.blue.opacity(0.4), Color.purple.opacity(0.4)],
-                                          startPoint: .topLeading, endPoint: .bottomTrailing))
-                                      .overlay(
-                                          Image(systemName: "music.note")
-                                              .font(.system(size: 72, weight: .ultraLight))
-                                              .foregroundColor(.white.opacity(0.5)))
-                                      .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
-                              }
-                          }
-                          .aspectRatio(1, contentMode: .fit)
-                          .padding(.horizontal, 32)
-                          .scaleEffect(player.isPlaying ? 1.0 : 0.92)
-                          .animation(.spring(response: 0.4, dampingFraction: 0.7), value: player.isPlaying)
-          
-                          Spacer(minLength: 24)
-          
-                          // Song info
-                          VStack(spacing: 6) {
-                              Text(player.currentSong?.title ?? "Nothing playing")
-                                  .font(.system(size: 22, weight: .bold))
-                                  .multilineTextAlignment(.center).lineLimit(2)
-                                  .padding(.horizontal, 24)
-                              Text(player.currentSong?.artist ?? "Open Folders to pick a song")
-                                  .font(.system(size: 16)).foregroundColor(.secondary)
-                          }
-          
-                          Spacer(minLength: 20)
-          
-                          // Seek bar
-                          VStack(spacing: 6) {
-                              Slider(value: Binding(
-                                  get: { player.duration > 0 ? player.currentTime / player.duration : 0 },
-                                  set: { player.seek(to: $0 * player.duration) }
-                              )).tint(.white).padding(.horizontal, 24)
-          
-                              HStack {
-                                  Text(formatTime(player.currentTime))
-                                  Spacer()
-                                  Text(formatTime(player.duration))
-                              }
-                              .font(.system(size: 12, design: .monospaced))
-                              .foregroundColor(.secondary)
-                              .padding(.horizontal, 28)
-                          }
-          
-                          Spacer(minLength: 20)
-          
-                          // Controls
-                          HStack(spacing: 0) {
-                              Button { player.shuffle.toggle() } label: {
-                                  Image(systemName: "shuffle")
-                                      .font(.system(size: 18))
-                                      .foregroundColor(player.shuffle ? .blue : .secondary)
-                              }
-                              Spacer()
-                              Button { player.previous() } label: {
-                                  Image(systemName: "backward.fill").font(.system(size: 28))
-                              }
-                              Spacer()
-                              Button { player.togglePlayPause() } label: {
-                                  ZStack {
-                                      Circle().fill(Color.white).frame(width: 72, height: 72)
-                                          .shadow(color: .black.opacity(0.2), radius: 8)
-                                      Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-                                          .font(.system(size: 28, weight: .bold)).foregroundColor(.black)
-                                          .offset(x: player.isPlaying ? 0 : 2)
-                                  }
-                              }.buttonStyle(.plain)
-                              Spacer()
-                              Button { player.next() } label: {
-                                  Image(systemName: "forward.fill").font(.system(size: 28))
-                              }
-                              Spacer()
-                              Button {
-                                  switch player.repeatMode {
-                                  case .none: player.repeatMode = .all
-                                  case .all:  player.repeatMode = .one
-                                  case .one:  player.repeatMode = .none
-                                  }
-                              } label: {
-                                  Image(systemName: player.repeatMode == .one ? "repeat.1" : "repeat")
-                                      .font(.system(size: 18))
-                                      .foregroundColor(player.repeatMode == .none ? .secondary : .blue)
-                              }
-                          }
-                          .foregroundColor(.primary)
-                          .padding(.horizontal, 32)
-          
-                          Spacer(minLength: 20)
-          
-                          // Volume
-                          HStack(spacing: 10) {
-                              Image(systemName: "speaker.fill").foregroundColor(.secondary).font(.system(size: 13))
-                              Slider(value: $player.volume).tint(.secondary)
-                              Image(systemName: "speaker.wave.3.fill").foregroundColor(.secondary).font(.system(size: 13))
-                          }
-                          .padding(.horizontal, 32)
-          
-                          Spacer(minLength: 32)
-                      }
-                      .navigationTitle("Now Playing")
-                      .navigationBarTitleDisplayMode(.inline)
-                  }
-                  .navigationViewStyle(.stack)
-              }
-          
-              private func formatTime(_ t: TimeInterval) -> String {
-                  guard t.isFinite, !t.isNaN else { return "0:00" }
-                  return String(format: "%d:%02d", Int(t) / 60, Int(t) % 60)
-              }
-          }
-          
-          SWIFT_VIEWS_PLAYERVIEW_SWIFT
-
-          # Create Views/MiniPlayerView.swift
-          cat > Views/MiniPlayerView.swift << 'SWIFT_VIEWS_MINIPLAYERVIEW_SWIFT'
-          import SwiftUI
-          
-          struct MiniPlayerView: View {
-              @EnvironmentObject var player: PlayerViewModel
-              let onTap: () -> Void
-          
-              var body: some View {
-                  VStack(spacing: 0) {
-                      GeometryReader { geo in
-                          Rectangle().fill(Color.blue)
-                              .frame(width: player.duration > 0
-                                  ? geo.size.width * CGFloat(player.currentTime / player.duration) : 0)
-                      }
-                      .frame(height: 2)
-                      .background(Color.white.opacity(0.1))
-          
-                      HStack(spacing: 12) {
-                          Group {
-                              if let art = player.currentSong?.artwork {
-                                  Image(uiImage: art).resizable().scaledToFill()
-                              } else {
-                                  Image(systemName: "music.note")
-                                      .font(.system(size: 16)).foregroundColor(.secondary)
-                              }
-                          }
-                          .frame(width: 40, height: 40)
-                          .background(Color(.tertiarySystemBackground))
-                          .clipShape(RoundedRectangle(cornerRadius: 6))
-          
-                          VStack(alignment: .leading, spacing: 2) {
-                              Text(player.currentSong?.title ?? "")
-                                  .font(.system(size: 14, weight: .semibold)).lineLimit(1)
-                              Text(player.currentSong?.artist ?? "")
-                                  .font(.system(size: 12)).foregroundColor(.secondary).lineLimit(1)
-                          }
-                          Spacer()
-                          HStack(spacing: 20) {
-                              Button { player.previous() } label: {
-                                  Image(systemName: "backward.fill").font(.system(size: 20))
-                              }
-                              Button { player.togglePlayPause() } label: {
-                                  Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-                                      .font(.system(size: 22))
-                              }
-                              Button { player.next() } label: {
-                                  Image(systemName: "forward.fill").font(.system(size: 20))
-                              }
-                          }
-                          .foregroundColor(.primary)
-                      }
-                      .padding(.horizontal, 16).padding(.vertical, 10)
-                  }
-                  .contentShape(Rectangle())
-                  .onTapGesture { onTap() }
-              }
-          }
-          
-          SWIFT_VIEWS_MINIPLAYERVIEW_SWIFT
-
-          # Create Views/SettingsView.swift
-          cat > Views/SettingsView.swift << 'SWIFT_VIEWS_SETTINGSVIEW_SWIFT'
-          import SwiftUI
-          
-          struct SettingsView: View {
-              @EnvironmentObject var player:  PlayerViewModel
-              @EnvironmentObject var hfp:     HFPManager
-              @EnvironmentObject var audio:   AudioSessionManager
-              @EnvironmentObject var library: MusicLibrary
-              @EnvironmentObject var callKit: CallKitManager
-          
-              var body: some View {
-                  NavigationView {
-                      List {
-          
-                          // ── CallKit HFP (Best method) ────────────────────────────
-                          Section {
-                              HStack {
-                                  VStack(alignment: .leading, spacing: 4) {
-                                      Label("Bala AUX Mode", systemImage: "car.fill")
-                                          .font(.system(size: 16, weight: .bold))
-                                          .foregroundColor(.green)
-                                      Text("Best quality — routes music via Bluetooth call channel")
-                                          .font(.system(size: 12)).foregroundColor(.secondary)
-                                  }
-                                  Spacer()
-                                  Toggle("", isOn: Binding(
-                                      get:  { callKit.isCallActive },
-                                      set: { on in
-                                          if on {
-                                              callKit.startCall()
-                                              DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                  if !player.isPlaying { player.resume() }
-                                              }
-                                          } else {
-                                              callKit.endCall()
-                                          }
-                                      }
-                                  )).tint(.green)
-                              }
-                              .padding(.vertical, 4)
-          
-                              if callKit.isCallActive {
-                                  HStack {
-                                      Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                                      Text("Active — music routing via HFP")
-                                          .font(.system(size: 13)).foregroundColor(.green)
-                                  }
-                              }
-          
-                              HStack {
-                                  Image(systemName: "bluetooth").foregroundColor(.blue).frame(width: 28)
-                                  Text("Output")
-                                  Spacer()
-                                  Text(audio.currentRoute.isEmpty ? "Speaker" : audio.currentRoute)
-                                      .foregroundColor(.secondary).font(.system(size: 14))
-                              }
-          
-                          } header: { Text("🚗 Car Audio") }
-                            footer: { Text("Connects to your car using the Bluetooth call channel — same path as real phone calls. Works with cars that only support HFP (no A2DP music streaming).") }
-          
-                          // ── Playback ─────────────────────────────────────────────
-                          Section("Playback") {
-                              HStack {
-                                  Image(systemName: "shuffle").foregroundColor(.blue).frame(width: 28)
-                                  Toggle("Shuffle", isOn: $player.shuffle)
-                              }
-                              HStack {
-                                  Image(systemName: "repeat").foregroundColor(.blue).frame(width: 28)
-                                  Picker("Repeat", selection: $player.repeatMode) {
-                                      Text("Off").tag(PlayerViewModel.RepeatMode.none)
-                                      Text("All").tag(PlayerViewModel.RepeatMode.all)
-                                      Text("One").tag(PlayerViewModel.RepeatMode.one)
-                                  }
-                                  .pickerStyle(.menu)
-                              }
-                          }
-          
-                          // ── Library ───────────────────────────────────────────────
-                          Section("Library") {
-                              HStack {
-                                  Image(systemName: "music.note.list").foregroundColor(.blue).frame(width: 28)
-                                  Text("Total Songs")
-                                  Spacer()
-                                  Text("\(library.allSongs.count)").foregroundColor(.secondary)
-                              }
-                              HStack {
-                                  Image(systemName: "folder.fill").foregroundColor(.blue).frame(width: 28)
-                                  Text("Folders")
-                                  Spacer()
-                                  Text("\(library.folders.count)").foregroundColor(.secondary)
-                              }
-                              Button {
-                                  library.load()
-                              } label: {
-                                  HStack {
-                                      Image(systemName: "arrow.clockwise").foregroundColor(.blue).frame(width: 28)
-                                      Text("Rescan Library")
-                                  }
-                              }
-                          }
-          
-                          // ── Add music ─────────────────────────────────────────────
-                          Section {
-                              VStack(alignment: .leading, spacing: 8) {
-                                  Label("How to add music", systemImage: "info.circle")
-                                      .font(.system(size: 15, weight: .medium))
-                                  Text("1. Open the **Files** app\n2. Go to **On My iPhone → Bala AUX → Documents**\n3. Copy your MP3 / M4A files there\n4. Tap **Rescan Library** above")
-                                      .font(.system(size: 13)).foregroundColor(.secondary)
-                              }
-                              .padding(.vertical, 4)
-                          } header: { Text("Adding Music") }
-          
-                          // ── About ─────────────────────────────────────────────────
-                          Section("About") {
-                              HStack { Text("App"); Spacer(); Text("Bala AUX").foregroundColor(.secondary) }
-                              HStack { Text("Version"); Spacer(); Text("1.0.0").foregroundColor(.secondary) }
-                              HStack { Text("iOS"); Spacer(); Text("15.0+").foregroundColor(.secondary) }
-                          }
-                      }
-                      .navigationTitle("Settings")
-                      .navigationBarTitleDisplayMode(.large)
-                  }
-                  .navigationViewStyle(.stack)
-              }
-          }
-          
-          SWIFT_VIEWS_SETTINGSVIEW_SWIFT
-
-          # Reconstruct xcodeproj workspace
-          cat > BalaAUX.xcodeproj/project.xcworkspace/contents.xcworkspacedata << 'WORKSPACE'
+          PBXEOF
+          cat > BalaAUX.xcodeproj/project.xcworkspace/contents.xcworkspacedata << 'WSEOF'
           <?xml version="1.0" encoding="UTF-8"?>
-          <Workspace version = "1.0">
-             <FileRef location = "self:"></FileRef>
-          </Workspace>
-          WORKSPACE
-
-          cat > BalaAUX.xcodeproj/xcshareddata/xcschemes/BalaAUX.xcscheme << 'SCHEME'
+          <Workspace version = "1.0"><FileRef location = "self:"></FileRef></Workspace>
+          WSEOF
+          cat > BalaAUX.xcodeproj/xcshareddata/xcschemes/BalaAUX.xcscheme << 'SCHEOF'
           <?xml version="1.0" encoding="UTF-8"?>
           <Scheme LastUpgradeVersion="1500" version="1.7">
              <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
-                <BuildActionEntries>
-                   <BuildActionEntry buildForArchiving="YES" buildForAnalyzing="YES" buildForRunning="YES" buildForProfiling="YES" buildForTesting="YES">
-                      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="TGT" BuildableName="BalaAUX.app" BlueprintName="BalaAUX" ReferencedContainer="container:BalaAUX.xcodeproj"/>
-                   </BuildActionEntry>
-                </BuildActionEntries>
+                <BuildActionEntries><BuildActionEntry buildForArchiving="YES" buildForRunning="YES" buildForProfiling="YES" buildForTesting="YES" buildForAnalyzing="YES">
+                   <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="TGT" BuildableName="BalaAUX.app" BlueprintName="BalaAUX" ReferencedContainer="container:BalaAUX.xcodeproj"/>
+                </BuildActionEntry></BuildActionEntries>
              </BuildAction>
              <ArchiveAction buildConfiguration="Release" revealArchiveInOrganizer="YES"/>
           </Scheme>
-          SCHEME
+          SCHEOF
+          echo "pbxproj created: $(wc -l < BalaAUX.xcodeproj/project.pbxproj) lines"
 
-          echo "=== Structure after reconstruct ==="
+      - name: Create Swift source files
+        script: |
+          mkdir -p Models ViewModels Services Views
+          cat > Models/Song.swift << 'EOF_MODELS_SONG_SWIFT'
+import Foundation
+import UIKit
+import MediaPlayer
+
+struct Song: Identifiable, Hashable {
+    let id: UUID
+    let title: String
+    let artist: String
+    let album: String
+    let duration: TimeInterval
+    let url: URL
+    let folderName: String
+    var artwork: UIImage?
+    let mediaItem: MPMediaItem?
+
+    init(title: String, artist: String, album: String,
+         duration: TimeInterval, url: URL, folderName: String,
+         artwork: UIImage? = nil, mediaItem: MPMediaItem? = nil) {
+        self.id = UUID(); self.title = title; self.artist = artist
+        self.album = album; self.duration = duration; self.url = url
+        self.folderName = folderName; self.artwork = artwork
+        self.mediaItem = mediaItem
+    }
+
+    var durationFormatted: String {
+        let m = Int(duration) / 60; let s = Int(duration) % 60
+        return String(format: "%d:%02d", m, s)
+    }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
+    static func == (lhs: Song, rhs: Song) -> Bool { lhs.id == rhs.id }
+}
+
+struct MusicFolder: Identifiable {
+    let id = UUID()
+    let name: String
+    var songs: [Song]
+    var songCount: Int { songs.count }
+}
+
+          EOF_MODELS_SONG_SWIFT
+          echo "Created Models/Song.swift"
+
+          cat > ViewModels/PlayerViewModel.swift << 'EOF_VIEWMODELS_PLAYERVIEWMODEL_SWIFT'
+import AVFoundation
+import MediaPlayer
+import UIKit
+
+@MainActor
+final class PlayerViewModel: ObservableObject {
+
+    @Published var currentSong: Song?
+    @Published var playlist:    [Song] = []
+    @Published var currentIndex = -1
+    @Published var isPlaying    = false
+    @Published var currentTime: TimeInterval = 0
+    @Published var duration:    TimeInterval = 0
+    @Published var shuffle      = false
+    @Published var repeatMode:  RepeatMode   = .none
+    @Published var volume: Float = 1.0 { didSet { player?.volume = volume } }
+
+    enum RepeatMode { case none, one, all }
+
+    private var player: AVAudioPlayer?
+    private var progressTimer: Timer?
+    private let audioSession = AudioSessionManager.shared
+
+    func setQueue(_ songs: [Song], startAt index: Int) {
+        playlist = songs; currentIndex = index; playCurrent()
+    }
+
+    func playSong(_ song: Song) {
+        if let idx = playlist.firstIndex(of: song) { currentIndex = idx }
+        else { playlist = [song]; currentIndex = 0 }
+        playCurrent()
+    }
+
+    private func playCurrent() {
+        guard currentIndex >= 0, currentIndex < playlist.count else { return }
+        play(song: playlist[currentIndex])
+    }
+
+    private func play(song: Song) {
+        stopTimer()
+        currentSong = song
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            let p = try AVAudioPlayer(contentsOf: song.url)
+            p.delegate      = PlayerDelegate.shared
+            p.enableRate    = true
+            p.prepareToPlay()
+            p.numberOfLoops = repeatMode == .one ? -1 : 0
+            p.volume = audioSession.isHFPActive ? min(volume * 2.0, 1.0) : volume
+            player   = p
+            duration = p.duration
+            p.play()
+            isPlaying = true
+            startTimer()
+            updateNowPlaying()
+            PlayerDelegate.shared.onFinish = { [weak self] in
+                Task { @MainActor in self?.handleFinished() }
+            }
+        } catch { print("Playback error: \(error)") }
+    }
+
+    func togglePlayPause() { if isPlaying { pause() } else { resume() } }
+    func pause()  { player?.pause(); isPlaying = false; stopTimer(); updateNowPlaying() }
+    func resume() { player?.play();  isPlaying = true;  startTimer(); updateNowPlaying() }
+
+    func next() {
+        guard !playlist.isEmpty else { return }
+        currentIndex = shuffle
+            ? Int.random(in: 0..<playlist.count)
+            : (currentIndex + 1) % playlist.count
+        playCurrent()
+    }
+
+    func previous() {
+        guard !playlist.isEmpty else { return }
+        if currentTime > 3 { seek(to: 0); return }
+        currentIndex = (currentIndex - 1 + playlist.count) % playlist.count
+        playCurrent()
+    }
+
+    func seek(to time: TimeInterval) {
+        player?.currentTime = time; currentTime = time; updateNowPlaying()
+    }
+
+    private func handleFinished() {
+        switch repeatMode {
+        case .one:  playCurrent()
+        case .all:  next()
+        case .none:
+            if currentIndex < playlist.count - 1 { next() }
+            else { isPlaying = false; stopTimer() }
+        }
+    }
+
+    private func startTimer() {
+        stopTimer()
+        progressTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            Task { @MainActor [weak self] in
+                guard let self = self, let p = self.player else { return }
+                self.currentTime = p.currentTime
+                self.updateNowPlaying()
+            }
+        }
+    }
+
+    private func stopTimer() { progressTimer?.invalidate(); progressTimer = nil }
+
+    private func updateNowPlaying() {
+        guard let song = currentSong else { return }
+        var info: [String: Any] = [
+            MPMediaItemPropertyTitle:                    song.title,
+            MPMediaItemPropertyArtist:                   song.artist,
+            MPMediaItemPropertyAlbumTitle:               song.album,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime,
+            MPMediaItemPropertyPlaybackDuration:         duration,
+            MPNowPlayingInfoPropertyPlaybackRate:        isPlaying ? 1.0 : 0.0,
+        ]
+        if let art = song.artwork {
+            info[MPMediaItemPropertyArtwork] =
+                MPMediaItemArtwork(boundsSize: art.size) { _ in art }
+        }
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+    }
+
+    func setupRemoteControls() {
+        let rc = MPRemoteCommandCenter.shared()
+        rc.playCommand.addTarget            { [weak self] _ in self?.resume();   return .success }
+        rc.pauseCommand.addTarget           { [weak self] _ in self?.pause();    return .success }
+        rc.nextTrackCommand.addTarget       { [weak self] _ in self?.next();     return .success }
+        rc.previousTrackCommand.addTarget   { [weak self] _ in self?.previous(); return .success }
+        rc.changePlaybackPositionCommand.addTarget { [weak self] event in
+            guard let e = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
+            self?.seek(to: e.positionTime); return .success
+        }
+    }
+}
+
+final class PlayerDelegate: NSObject, AVAudioPlayerDelegate {
+    static let shared = PlayerDelegate()
+    var onFinish: (() -> Void)?
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag { onFinish?() }
+    }
+}
+
+          EOF_VIEWMODELS_PLAYERVIEWMODEL_SWIFT
+          echo "Created ViewModels/PlayerViewModel.swift"
+
+          cat > Services/AudioSessionManager.swift << 'EOF_SERVICES_AUDIOSESSIONMANAGER_SWIFT'
+import AVFoundation
+import Foundation
+
+final class AudioSessionManager: ObservableObject {
+    static let shared = AudioSessionManager()
+    @Published var isHFPActive = false
+    @Published var currentRoute = ""
+    private let session = AVAudioSession.sharedInstance()
+    private var routeObserver: Any?
+
+    private init() {
+        observeRouteChanges()
+    }
+
+    func configureForMusic() {
+        do {
+            try session.setActive(false, options: .notifyOthersOnDeactivation)
+            try session.setCategory(.playback, mode: .default,
+                options: [.allowBluetoothA2DP, .allowAirPlay])
+            try session.setPreferredSampleRate(44100)
+            try session.setPreferredIOBufferDuration(0.005)
+            try session.setActive(true)
+            isHFPActive = false
+            updateRouteDescription()
+        } catch { print("Music session error: \(error)") }
+    }
+
+    func configureForHFP() {
+        do {
+            try session.setActive(false, options: .notifyOthersOnDeactivation)
+            try session.setCategory(.playAndRecord, mode: .voiceChat,
+                options: [.allowBluetoothHFP, .allowBluetooth, .defaultToSpeaker])
+            try session.setPreferredSampleRate(16000)
+            try session.setPreferredIOBufferDuration(0.02)
+            try session.setActive(true)
+            isHFPActive = true
+            updateRouteDescription()
+        } catch { print("HFP session error: \(error)") }
+    }
+
+    func deactivate() {
+        try? session.setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    private func observeRouteChanges() {
+        routeObserver = NotificationCenter.default.addObserver(
+            forName: AVAudioSession.routeChangeNotification,
+            object: nil, queue: .main) { [weak self] _ in
+                self?.updateRouteDescription()
+        }
+    }
+
+    private func updateRouteDescription() {
+        currentRoute = session.currentRoute.outputs
+            .map { $0.portName }.joined(separator: ", ")
+    }
+
+    var isBluetoothConnected: Bool {
+        session.currentRoute.outputs.contains {
+            [.bluetoothA2DP, .bluetoothHFP, .bluetoothLE].contains($0.portType)
+        }
+    }
+
+    var bluetoothPortName: String? {
+        session.currentRoute.outputs.first {
+            [.bluetoothA2DP, .bluetoothHFP, .bluetoothLE].contains($0.portType)
+        }?.portName
+    }
+
+    deinit {
+        if let obs = routeObserver { NotificationCenter.default.removeObserver(obs) }
+    }
+}
+
+          EOF_SERVICES_AUDIOSESSIONMANAGER_SWIFT
+          echo "Created Services/AudioSessionManager.swift"
+
+          cat > Services/MusicLibrary.swift << 'EOF_SERVICES_MUSICLIBRARY_SWIFT'
+import Foundation
+import MediaPlayer
+import UIKit
+import AVFoundation
+
+final class MusicLibrary: ObservableObject {
+    static let shared = MusicLibrary()
+    @Published var folders:    [MusicFolder] = []
+    @Published var allSongs:   [Song]        = []
+    @Published var isLoading                 = false
+
+    private init() {}
+
+    func load() {
+        isLoading = true
+        Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self else { return }
+            let songs   = await self.scanAll()
+            let grouped = self.groupByFolder(songs)
+            await MainActor.run {
+                self.allSongs = songs
+                self.folders  = grouped
+                self.isLoading = false
+            }
+        }
+    }
+
+    private func scanAll() async -> [Song] {
+        var songs: [Song] = []
+        let status = MPMediaLibrary.authorizationStatus()
+        if status == .authorized || status == .notDetermined {
+            let granted = await requestAccess()
+            if granted { songs += scanMediaLibrary() }
+        }
+        songs += scanDirectory(
+            url: FileManager.default.urls(for: .documentDirectory,
+                                          in: .userDomainMask)[0],
+            folderName: "Documents")
+        songs += scanDirectory(
+            url: FileManager.default.urls(for: .downloadsDirectory,
+                                          in: .userDomainMask).first,
+            folderName: "Downloads")
+        var seen = Set<URL>()
+        return songs.filter { seen.insert($0.url).inserted }
+    }
+
+    private func requestAccess() async -> Bool {
+        await withCheckedContinuation { cont in
+            MPMediaLibrary.requestAuthorization { status in
+                cont.resume(returning: status == .authorized)
+            }
+        }
+    }
+
+    private func scanMediaLibrary() -> [Song] {
+        guard let collections = MPMediaQuery.songs().collections else { return [] }
+        var songs: [Song] = []
+        for col in collections {
+            for item in col.items {
+                guard let url = item.assetURL else { continue }
+                let art = item.artwork?.image(at: CGSize(width: 300, height: 300))
+                songs.append(Song(
+                    title:      item.title ?? "Unknown",
+                    artist:     item.artist ?? "Unknown Artist",
+                    album:      item.albumTitle ?? "",
+                    duration:   item.playbackDuration,
+                    url:        url,
+                    folderName: item.albumTitle ?? item.artist ?? "Music Library",
+                    artwork:    art,
+                    mediaItem:  item
+                ))
+            }
+        }
+        return songs
+    }
+
+    private func scanDirectory(url: URL?, folderName: String) -> [Song] {
+        guard let url = url,
+              let items = try? FileManager.default.contentsOfDirectory(
+                at: url, includingPropertiesForKeys: [.isDirectoryKey],
+                options: .skipsHiddenFiles) else { return [] }
+        var songs: [Song] = []
+        for item in items {
+            let isDir = (try? item.resourceValues(
+                forKeys: [.isDirectoryKey]))?.isDirectory ?? false
+            if isDir {
+                songs += scanDirectory(url: item, folderName: item.lastPathComponent)
+            } else if isAudio(item) {
+                let title    = item.deletingPathExtension().lastPathComponent
+                let duration = CMTimeGetSeconds(AVURLAsset(url: item).duration)
+                songs.append(Song(title: title, artist: "Unknown Artist",
+                                  album: "", duration: duration,
+                                  url: item, folderName: folderName))
+            }
+        }
+        return songs
+    }
+
+    private func isAudio(_ url: URL) -> Bool {
+        ["mp3","m4a","aac","wav","aiff","flac","ogg","caf"]
+            .contains(url.pathExtension.lowercased())
+    }
+
+    private func groupByFolder(_ songs: [Song]) -> [MusicFolder] {
+        var map: [String: [Song]] = [:]
+        for song in songs { map[song.folderName, default: []].append(song) }
+        return map.map { MusicFolder(name: $0.key, songs: $0.value) }
+            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+}
+
+          EOF_SERVICES_MUSICLIBRARY_SWIFT
+          echo "Created Services/MusicLibrary.swift"
+
+          cat > Services/HFPManager.swift << 'EOF_SERVICES_HFPMANAGER_SWIFT'
+import Foundation
+import AVFoundation
+
+final class HFPManager: ObservableObject {
+    static let shared = HFPManager()
+    @Published var isEnabled  = false
+    @Published var routeInfo  = "Standard audio"
+    private let audioSession  = AudioSessionManager.shared
+
+    private init() {
+        NotificationCenter.default.addObserver(
+            forName: AVAudioSession.routeChangeNotification,
+            object: nil, queue: .main) { [weak self] _ in
+                self?.routeInfo = self?.audioSession.currentRoute ?? "Unknown"
+        }
+    }
+
+    func enable(playerVM: PlayerViewModel) {
+        isEnabled = true
+        Task { @MainActor in
+            let wasPlaying = playerVM.isPlaying
+            if wasPlaying { playerVM.pause() }
+            self.audioSession.configureForHFP()
+            if wasPlaying {
+                try? await Task.sleep(nanoseconds: 300_000_000)
+                playerVM.resume()
+            }
+        }
+    }
+
+    func disable(playerVM: PlayerViewModel) {
+        isEnabled = false
+        Task { @MainActor in
+            let wasPlaying = playerVM.isPlaying
+            if wasPlaying { playerVM.pause() }
+            self.audioSession.configureForMusic()
+            if wasPlaying {
+                try? await Task.sleep(nanoseconds: 300_000_000)
+                playerVM.resume()
+            }
+        }
+    }
+}
+
+          EOF_SERVICES_HFPMANAGER_SWIFT
+          echo "Created Services/HFPManager.swift"
+
+          cat > Services/CallKitManager.swift << 'EOF_SERVICES_CALLKITMANAGER_SWIFT'
+import CallKit
+import AVFoundation
+
+final class CallKitManager: NSObject, ObservableObject {
+    static let shared = CallKitManager()
+
+    @Published var isCallActive = false
+
+    private let provider: CXProvider
+    private let callController = CXCallController()
+    private var currentCallUUID: UUID?
+
+    override private init() {
+        let config = CXProviderConfiguration()
+        config.localizedName            = "Bala AUX"
+        config.supportsVideo            = false
+        config.maximumCallsPerCallGroup = 1
+        config.supportedHandleTypes     = [.generic]
+        provider = CXProvider(configuration: config)
+        super.init()
+        provider.setDelegate(self, queue: .main)
+    }
+
+    func startCall() {
+        guard !isCallActive else { return }
+        let uuid    = UUID()
+        currentCallUUID = uuid
+        let handle  = CXHandle(type: .generic, value: "Bala AUX")
+        let action  = CXStartCallAction(call: uuid, handle: handle)
+        action.isVideo = false
+        callController.request(CXTransaction(action: action)) { error in
+            if let error = error { print("CallKit start error: \(error)") }
+        }
+    }
+
+    func endCall() {
+        guard let uuid = currentCallUUID else { return }
+        callController.request(
+            CXTransaction(action: CXEndCallAction(call: uuid))) { error in
+            if let error = error { print("CallKit end error: \(error)") }
+        }
+        currentCallUUID = nil
+        isCallActive    = false
+    }
+}
+
+extension CallKitManager: CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        isCallActive = false; currentCallUUID = nil
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
+        AudioSessionManager.shared.configureForHFP()
+        action.fulfill()
+        isCallActive = true
+        provider.reportOutgoingCall(with: action.callUUID, connectedAt: Date())
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        action.fulfill()
+        isCallActive = false
+        AudioSessionManager.shared.configureForMusic()
+    }
+
+    func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
+        print("CallKit HFP audio activated")
+        NotificationCenter.default.post(name: .callKitAudioActivated, object: nil)
+    }
+
+    func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
+        print("CallKit audio deactivated")
+        NotificationCenter.default.post(name: .callKitAudioDeactivated, object: nil)
+    }
+}
+
+extension Notification.Name {
+    static let callKitAudioActivated   = Notification.Name("callKitAudioActivated")
+    static let callKitAudioDeactivated = Notification.Name("callKitAudioDeactivated")
+}
+
+          EOF_SERVICES_CALLKITMANAGER_SWIFT
+          echo "Created Services/CallKitManager.swift"
+
+          cat > Views/FolderBrowserView.swift << 'EOF_VIEWS_FOLDERBROWSERVIEW_SWIFT'
+import SwiftUI
+
+struct FolderBrowserView: View {
+    @EnvironmentObject var library: MusicLibrary
+    @State private var searchText = ""
+
+    var filtered: [MusicFolder] {
+        searchText.isEmpty ? library.folders
+            : library.folders.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
+
+    var body: some View {
+        NavigationView {
+            Group {
+                if library.isLoading {
+                    VStack(spacing: 16) {
+                        ProgressView().scaleEffect(1.4)
+                        Text("Scanning music…").foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if library.folders.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "folder.badge.questionmark")
+                            .font(.system(size: 56)).foregroundColor(.secondary)
+                        Text("No Music Found").font(.title2.bold())
+                        Text("Add MP3/M4A files via Files app → Bala AUX → Documents")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary).padding(.horizontal, 32)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List(filtered) { folder in
+                        NavigationLink(destination:
+                            SongsListView(songs: folder.songs, title: folder.name)) {
+                            HStack(spacing: 14) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.blue.opacity(0.15))
+                                        .frame(width: 46, height: 46)
+                                    Image(systemName: "folder.fill")
+                                        .font(.system(size: 22))
+                                        .foregroundColor(.blue)
+                                }
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(folder.name)
+                                        .font(.system(size: 16, weight: .semibold))
+                                    Text("\(folder.songCount) song\(folder.songCount == 1 ? "" : "s")")
+                                        .font(.system(size: 13))
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.vertical, 4)
+                        }
+                        .listRowBackground(Color(.secondarySystemBackground))
+                    }
+                    .listStyle(.insetGrouped)
+                    .searchable(text: $searchText, prompt: "Search folders")
+                    .refreshable { library.load() }
+                }
+            }
+            .navigationTitle("Bala AUX")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { library.load() } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                }
+            }
+        }
+        .navigationViewStyle(.stack)
+    }
+}
+
+          EOF_VIEWS_FOLDERBROWSERVIEW_SWIFT
+          echo "Created Views/FolderBrowserView.swift"
+
+          cat > Views/SongsListView.swift << 'EOF_VIEWS_SONGSLISTVIEW_SWIFT'
+import SwiftUI
+
+struct SongsListView: View {
+    @EnvironmentObject var player: PlayerViewModel
+    let songs: [Song]
+    let title: String
+    @State private var searchText = ""
+
+    var filtered: [Song] {
+        searchText.isEmpty ? songs
+            : songs.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText) ||
+                $0.artist.localizedCaseInsensitiveContains(searchText) }
+    }
+
+    var body: some View {
+        Group {
+            if songs.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "music.note").font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    Text("No Songs").font(.title2.bold())
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List {
+                    ForEach(Array(filtered.enumerated()), id: \.element.id) { idx, song in
+                        HStack(spacing: 12) {
+                            ZStack {
+                                if player.isPlaying && player.currentSong?.id == song.id {
+                                    Image(systemName: "waveform")
+                                        .font(.system(size: 14)).foregroundColor(.blue)
+                                } else if player.currentSong?.id == song.id {
+                                    Image(systemName: "play.fill")
+                                        .font(.system(size: 12)).foregroundColor(.blue)
+                                } else {
+                                    Text("\(idx + 1)")
+                                        .font(.system(size: 13, weight: .medium, design: .monospaced))
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .frame(width: 24)
+
+                            Group {
+                                if let art = song.artwork {
+                                    Image(uiImage: art).resizable().scaledToFill()
+                                } else {
+                                    Image(systemName: "music.note")
+                                        .font(.system(size: 18)).foregroundColor(.secondary)
+                                }
+                            }
+                            .frame(width: 44, height: 44)
+                            .background(Color(.tertiarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(song.title)
+                                    .font(.system(size: 15,
+                                        weight: player.currentSong?.id == song.id ? .semibold : .regular))
+                                    .foregroundColor(player.currentSong?.id == song.id ? .blue : .primary)
+                                    .lineLimit(1)
+                                Text(song.artist)
+                                    .font(.system(size: 13)).foregroundColor(.secondary).lineLimit(1)
+                            }
+                            Spacer()
+                            Text(song.durationFormatted)
+                                .font(.system(size: 13, design: .monospaced))
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 3)
+                        .contentShape(Rectangle())
+                        .onTapGesture { player.setQueue(filtered, startAt: idx) }
+                        .listRowBackground(
+                            player.currentSong?.id == song.id
+                                ? Color.blue.opacity(0.1)
+                                : Color(.secondarySystemBackground))
+                    }
+                }
+                .listStyle(.insetGrouped)
+                .searchable(text: $searchText, prompt: "Search songs")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            player.shuffle = true
+                            player.setQueue(songs.shuffled(), startAt: 0)
+                        } label: { Image(systemName: "shuffle") }
+                    }
+                }
+            }
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+          EOF_VIEWS_SONGSLISTVIEW_SWIFT
+          echo "Created Views/SongsListView.swift"
+
+          cat > Views/PlayerView.swift << 'EOF_VIEWS_PLAYERVIEW_SWIFT'
+import SwiftUI
+
+struct PlayerView: View {
+    @EnvironmentObject var player: PlayerViewModel
+
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 0) {
+                Spacer(minLength: 16)
+
+                // Artwork
+                ZStack {
+                    if let art = player.currentSong?.artwork {
+                        Image(uiImage: art).resizable().scaledToFill()
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .shadow(color: .black.opacity(0.4), radius: 30, x: 0, y: 15)
+                    } else {
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(LinearGradient(
+                                colors: [Color.blue.opacity(0.4), Color.purple.opacity(0.4)],
+                                startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .overlay(
+                                Image(systemName: "music.note")
+                                    .font(.system(size: 72, weight: .ultraLight))
+                                    .foregroundColor(.white.opacity(0.5)))
+                            .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
+                    }
+                }
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.horizontal, 32)
+                .scaleEffect(player.isPlaying ? 1.0 : 0.92)
+                .animation(.spring(response: 0.4, dampingFraction: 0.7), value: player.isPlaying)
+
+                Spacer(minLength: 24)
+
+                // Song info
+                VStack(spacing: 6) {
+                    Text(player.currentSong?.title ?? "Nothing playing")
+                        .font(.system(size: 22, weight: .bold))
+                        .multilineTextAlignment(.center).lineLimit(2)
+                        .padding(.horizontal, 24)
+                    Text(player.currentSong?.artist ?? "Open Folders to pick a song")
+                        .font(.system(size: 16)).foregroundColor(.secondary)
+                }
+
+                Spacer(minLength: 20)
+
+                // Seek bar
+                VStack(spacing: 6) {
+                    Slider(value: Binding(
+                        get: { player.duration > 0 ? player.currentTime / player.duration : 0 },
+                        set: { player.seek(to: $0 * player.duration) }
+                    )).tint(.white).padding(.horizontal, 24)
+
+                    HStack {
+                        Text(formatTime(player.currentTime))
+                        Spacer()
+                        Text(formatTime(player.duration))
+                    }
+                    .font(.system(size: 12, design: .monospaced))
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 28)
+                }
+
+                Spacer(minLength: 20)
+
+                // Controls
+                HStack(spacing: 0) {
+                    Button { player.shuffle.toggle() } label: {
+                        Image(systemName: "shuffle")
+                            .font(.system(size: 18))
+                            .foregroundColor(player.shuffle ? .blue : .secondary)
+                    }
+                    Spacer()
+                    Button { player.previous() } label: {
+                        Image(systemName: "backward.fill").font(.system(size: 28))
+                    }
+                    Spacer()
+                    Button { player.togglePlayPause() } label: {
+                        ZStack {
+                            Circle().fill(Color.white).frame(width: 72, height: 72)
+                                .shadow(color: .black.opacity(0.2), radius: 8)
+                            Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+                                .font(.system(size: 28, weight: .bold)).foregroundColor(.black)
+                                .offset(x: player.isPlaying ? 0 : 2)
+                        }
+                    }.buttonStyle(.plain)
+                    Spacer()
+                    Button { player.next() } label: {
+                        Image(systemName: "forward.fill").font(.system(size: 28))
+                    }
+                    Spacer()
+                    Button {
+                        switch player.repeatMode {
+                        case .none: player.repeatMode = .all
+                        case .all:  player.repeatMode = .one
+                        case .one:  player.repeatMode = .none
+                        }
+                    } label: {
+                        Image(systemName: player.repeatMode == .one ? "repeat.1" : "repeat")
+                            .font(.system(size: 18))
+                            .foregroundColor(player.repeatMode == .none ? .secondary : .blue)
+                    }
+                }
+                .foregroundColor(.primary)
+                .padding(.horizontal, 32)
+
+                Spacer(minLength: 20)
+
+                // Volume
+                HStack(spacing: 10) {
+                    Image(systemName: "speaker.fill").foregroundColor(.secondary).font(.system(size: 13))
+                    Slider(value: $player.volume).tint(.secondary)
+                    Image(systemName: "speaker.wave.3.fill").foregroundColor(.secondary).font(.system(size: 13))
+                }
+                .padding(.horizontal, 32)
+
+                Spacer(minLength: 32)
+            }
+            .navigationTitle("Now Playing")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationViewStyle(.stack)
+    }
+
+    private func formatTime(_ t: TimeInterval) -> String {
+        guard t.isFinite, !t.isNaN else { return "0:00" }
+        return String(format: "%d:%02d", Int(t) / 60, Int(t) % 60)
+    }
+}
+
+          EOF_VIEWS_PLAYERVIEW_SWIFT
+          echo "Created Views/PlayerView.swift"
+
+          cat > Views/MiniPlayerView.swift << 'EOF_VIEWS_MINIPLAYERVIEW_SWIFT'
+import SwiftUI
+
+struct MiniPlayerView: View {
+    @EnvironmentObject var player: PlayerViewModel
+    let onTap: () -> Void
+
+    var body: some View {
+        VStack(spacing: 0) {
+            GeometryReader { geo in
+                Rectangle().fill(Color.blue)
+                    .frame(width: player.duration > 0
+                        ? geo.size.width * CGFloat(player.currentTime / player.duration) : 0)
+            }
+            .frame(height: 2)
+            .background(Color.white.opacity(0.1))
+
+            HStack(spacing: 12) {
+                Group {
+                    if let art = player.currentSong?.artwork {
+                        Image(uiImage: art).resizable().scaledToFill()
+                    } else {
+                        Image(systemName: "music.note")
+                            .font(.system(size: 16)).foregroundColor(.secondary)
+                    }
+                }
+                .frame(width: 40, height: 40)
+                .background(Color(.tertiarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(player.currentSong?.title ?? "")
+                        .font(.system(size: 14, weight: .semibold)).lineLimit(1)
+                    Text(player.currentSong?.artist ?? "")
+                        .font(.system(size: 12)).foregroundColor(.secondary).lineLimit(1)
+                }
+                Spacer()
+                HStack(spacing: 20) {
+                    Button { player.previous() } label: {
+                        Image(systemName: "backward.fill").font(.system(size: 20))
+                    }
+                    Button { player.togglePlayPause() } label: {
+                        Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+                            .font(.system(size: 22))
+                    }
+                    Button { player.next() } label: {
+                        Image(systemName: "forward.fill").font(.system(size: 20))
+                    }
+                }
+                .foregroundColor(.primary)
+            }
+            .padding(.horizontal, 16).padding(.vertical, 10)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { onTap() }
+    }
+}
+
+          EOF_VIEWS_MINIPLAYERVIEW_SWIFT
+          echo "Created Views/MiniPlayerView.swift"
+
+          cat > Views/SettingsView.swift << 'EOF_VIEWS_SETTINGSVIEW_SWIFT'
+import SwiftUI
+
+struct SettingsView: View {
+    @EnvironmentObject var player:  PlayerViewModel
+    @EnvironmentObject var hfp:     HFPManager
+    @EnvironmentObject var audio:   AudioSessionManager
+    @EnvironmentObject var library: MusicLibrary
+    @EnvironmentObject var callKit: CallKitManager
+
+    var body: some View {
+        NavigationView {
+            List {
+
+                // ── CallKit HFP (Best method) ────────────────────────────
+                Section {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Label("Bala AUX Mode", systemImage: "car.fill")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.green)
+                            Text("Best quality — routes music via Bluetooth call channel")
+                                .font(.system(size: 12)).foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        Toggle("", isOn: Binding(
+                            get:  { callKit.isCallActive },
+                            set: { on in
+                                if on {
+                                    callKit.startCall()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        if !player.isPlaying { player.resume() }
+                                    }
+                                } else {
+                                    callKit.endCall()
+                                }
+                            }
+                        )).tint(.green)
+                    }
+                    .padding(.vertical, 4)
+
+                    if callKit.isCallActive {
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                            Text("Active — music routing via HFP")
+                                .font(.system(size: 13)).foregroundColor(.green)
+                        }
+                    }
+
+                    HStack {
+                        Image(systemName: "bluetooth").foregroundColor(.blue).frame(width: 28)
+                        Text("Output")
+                        Spacer()
+                        Text(audio.currentRoute.isEmpty ? "Speaker" : audio.currentRoute)
+                            .foregroundColor(.secondary).font(.system(size: 14))
+                    }
+
+                } header: { Text("🚗 Car Audio") }
+                  footer: { Text("Connects to your car using the Bluetooth call channel — same path as real phone calls. Works with cars that only support HFP (no A2DP music streaming).") }
+
+                // ── Playback ─────────────────────────────────────────────
+                Section("Playback") {
+                    HStack {
+                        Image(systemName: "shuffle").foregroundColor(.blue).frame(width: 28)
+                        Toggle("Shuffle", isOn: $player.shuffle)
+                    }
+                    HStack {
+                        Image(systemName: "repeat").foregroundColor(.blue).frame(width: 28)
+                        Picker("Repeat", selection: $player.repeatMode) {
+                            Text("Off").tag(PlayerViewModel.RepeatMode.none)
+                            Text("All").tag(PlayerViewModel.RepeatMode.all)
+                            Text("One").tag(PlayerViewModel.RepeatMode.one)
+                        }
+                        .pickerStyle(.menu)
+                    }
+                }
+
+                // ── Library ───────────────────────────────────────────────
+                Section("Library") {
+                    HStack {
+                        Image(systemName: "music.note.list").foregroundColor(.blue).frame(width: 28)
+                        Text("Total Songs")
+                        Spacer()
+                        Text("\(library.allSongs.count)").foregroundColor(.secondary)
+                    }
+                    HStack {
+                        Image(systemName: "folder.fill").foregroundColor(.blue).frame(width: 28)
+                        Text("Folders")
+                        Spacer()
+                        Text("\(library.folders.count)").foregroundColor(.secondary)
+                    }
+                    Button {
+                        library.load()
+                    } label: {
+                        HStack {
+                            Image(systemName: "arrow.clockwise").foregroundColor(.blue).frame(width: 28)
+                            Text("Rescan Library")
+                        }
+                    }
+                }
+
+                // ── Add music ─────────────────────────────────────────────
+                Section {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("How to add music", systemImage: "info.circle")
+                            .font(.system(size: 15, weight: .medium))
+                        Text("1. Open the **Files** app\n2. Go to **On My iPhone → Bala AUX → Documents**\n3. Copy your MP3 / M4A files there\n4. Tap **Rescan Library** above")
+                            .font(.system(size: 13)).foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                } header: { Text("Adding Music") }
+
+                // ── About ─────────────────────────────────────────────────
+                Section("About") {
+                    HStack { Text("App"); Spacer(); Text("Bala AUX").foregroundColor(.secondary) }
+                    HStack { Text("Version"); Spacer(); Text("1.0.0").foregroundColor(.secondary) }
+                    HStack { Text("iOS"); Spacer(); Text("15.0+").foregroundColor(.secondary) }
+                }
+            }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.large)
+        }
+        .navigationViewStyle(.stack)
+    }
+}
+
+          EOF_VIEWS_SETTINGSVIEW_SWIFT
+          echo "Created Views/SettingsView.swift"
+
+          echo "=== Swift files ready ==="
           find . -name "*.swift" | sort
 
       - name: Build unsigned
@@ -1083,10 +1264,8 @@ workflows:
 
       - name: Package IPA
         script: |
-          APP=$(find $CM_BUILD_DIR/derived -name "BalaAUX.app" \
-            -path "*Release-iphoneos*" | head -1)
-          [ -z "$APP" ] && APP=$(find $CM_BUILD_DIR/derived \
-            -name "*.app" -path "*iphoneos*" | head -1)
+          APP=$(find $CM_BUILD_DIR/derived -name "BalaAUX.app" -path "*Release-iphoneos*" | head -1)
+          [ -z "$APP" ] && APP=$(find $CM_BUILD_DIR/derived -name "*.app" -path "*iphoneos*" | head -1)
           echo "App: $APP"
           mkdir -p $CM_BUILD_DIR/Payload
           cp -r "$APP" $CM_BUILD_DIR/Payload/BalaAUX.app
